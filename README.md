@@ -7,7 +7,9 @@
 [![RTOS](https://img.shields.io/badge/RTOS-FreeRTOS%20V9.0.0-green.svg)]()
 [![IDE](https://img.shields.io/badge/IDE-Keil%20MDK%205-orange.svg)]()
 
-<!-- 录好演示 GIF 后：把图放到 docs/images/demo.gif，再去掉下面这行的注释符号 -->
+![系统架构：手柄端姿态采集 → 2.4G 无线 → 小车端 FreeRTOS 闭环控制](docs/images/architecture.svg)
+
+<!-- 录好真机演示后：把 GIF 放到 docs/images/demo.gif，再把下面这行取消注释 -->
 <!-- ![演示](docs/images/demo.gif) -->
 
 ## 项目简介
@@ -71,7 +73,7 @@ flowchart LR
 ## 目录结构
 
 ```
-A0006-26-258-手势识别小车/
+手势识别小车/
 ├── 遥控/                        # 手柄端 Keil 工程
 │   ├── Template.uvprojx         # ← 手柄端入口工程
 │   ├── APP/                     # 应用层：MPU6050 / nRF24L01 / OLED / DHT22 / 按键 / LED

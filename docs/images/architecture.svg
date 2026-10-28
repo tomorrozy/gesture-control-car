@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 480" width="980" height="480" font-family="'Microsoft YaHei','PingFang SC','Hiragino Sans GB',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="480" fill="#f8fafc"/>
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#0f172a">手势识别小车 · 系统架构</text>
+
+  <!-- 手柄端 -->
+  <rect x="16" y="56" width="300" height="400" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="5 4"/>
+  <text x="166" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#1e40af">手柄端 · STM32F103（中容量）</text>
+
+  <rect x="36" y="96" width="260" height="48" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="166" y="117" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">MPU6050 姿态解算</text>
+  <text x="166" y="134" text-anchor="middle" font-size="11" fill="#334155">软件 I2C · PB6/PB7 · 互补滤波</text>
+
+  <rect x="36" y="160" width="260" height="48" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="166" y="181" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">手势映射</text>
+  <text x="166" y="198" text-anchor="middle" font-size="11" fill="#334155">pitch / roll → 0~5 · 阈值 15°</text>
+
+  <rect x="36" y="224" width="260" height="48" rx="8" fill="#dbeafe" stroke="#60a5fa"/>
+  <text x="166" y="245" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">协议打包 · 13 字节</text>
+  <text x="166" y="262" text-anchor="middle" font-size="11" fill="#334155">0xA5 | len | pitch | roll | g | XOR | 0x0D</text>
+
+  <rect x="36" y="288" width="260" height="48" rx="8" fill="#bfdbfe" stroke="#3b82f6"/>
+  <text x="166" y="309" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">nRF24L01 发送</text>
+  <text x="166" y="326" text-anchor="middle" font-size="11" fill="#334155">2.4 GHz · 通道 40 · 100 ms 一帧</text>
+
+  <rect x="36" y="368" width="260" height="44" rx="8" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="166" y="395" text-anchor="middle" font-size="12" fill="#475569">OLED 显示姿态角与手势编号</text>
+
+  <line x1="166" y1="144" x2="166" y2="158" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="166" y1="208" x2="166" y2="222" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="166" y1="272" x2="166" y2="286" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 无线链路 -->
+  <path d="M 300 312 C 380 312, 420 118, 556 118" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-dasharray="7 5" marker-end="url(#arrowBlue)"/>
+  <rect x="370" y="176" width="132" height="44" rx="8" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="436" y="194" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">2.4 GHz 无线</text>
+  <text x="436" y="210" text-anchor="middle" font-size="11" fill="#475569">100 ms / 32 B 载荷</text>
+
+  <!-- 小车端 -->
+  <rect x="556" y="56" width="408" height="400" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-dasharray="5 4"/>
+  <text x="760" y="80" text-anchor="middle" font-size="14" font-weight="700" fill="#166534">小车端 · STM32F103ZE（FreeRTOS V9.0.0）</text>
+
+  <rect x="580" y="96" width="360" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="760" y="115" text-anchor="middle" font-size="13" font-weight="600" fill="#14532d">nRF24L01 接收（多通道）</text>
+  <text x="760" y="131" text-anchor="middle" font-size="11" fill="#334155">SPI：PA2 / PA3 / PA4 / PA5 · MISO PB0</text>
+
+  <rect x="580" y="152" width="360" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="760" y="171" text-anchor="middle" font-size="13" font-weight="600" fill="#14532d">协议解包 + 校验</text>
+  <text x="760" y="187" text-anchor="middle" font-size="11" fill="#334155">帧头 / 长度 / 帧尾 / XOR 四项全过才采信</text>
+
+  <rect x="580" y="208" width="360" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="760" y="227" text-anchor="middle" font-size="13" font-weight="600" fill="#14532d">姿态 → 差速目标速度</text>
+  <text x="760" y="243" text-anchor="middle" font-size="11" fill="#334155">死区 10° · 转向阈值 15° · targetL/R = X ± Y</text>
+
+  <rect x="580" y="264" width="360" height="44" rx="8" fill="#bbf7d0" stroke="#22c55e"/>
+  <text x="760" y="283" text-anchor="middle" font-size="13" font-weight="600" fill="#14532d">左右轮 PID 速度环</text>
+  <text x="760" y="299" text-anchor="middle" font-size="11" fill="#334155">Kp = 2.0 · Ki = 1.5 · 输出限幅 ±100</text>
+
+  <rect x="580" y="320" width="360" height="44" rx="8" fill="#dcfce7" stroke="#4ade80"/>
+  <text x="760" y="339" text-anchor="middle" font-size="13" font-weight="600" fill="#14532d">TIM2 PWM 20 kHz → 电机驱动</text>
+  <text x="760" y="355" text-anchor="middle" font-size="11" fill="#334155">PA0 / PA1 · 方向 PB12~PB15</text>
+
+  <rect x="580" y="376" width="360" height="44" rx="8" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="760" y="395" text-anchor="middle" font-size="12" fill="#475569">直流减速电机 + 霍尔编码器</text>
+  <text x="760" y="411" text-anchor="middle" font-size="11" fill="#64748b">TIM3（左 PA6/PA7）· TIM4（右 PB6/PB7）</text>
+
+  <line x1="760" y1="140" x2="760" y2="150" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="760" y1="196" x2="760" y2="206" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="760" y1="252" x2="760" y2="262" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="760" y1="308" x2="760" y2="318" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line x1="760" y1="364" x2="760" y2="374" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 编码器反馈闭环 -->
+  <path d="M 580 398 L 566 398 L 566 286 L 576 286" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#arrowGreen)"/>
+  <text x="556" y="352" text-anchor="middle" font-size="10" fill="#15803d" transform="rotate(-90 556 352)">编码器反馈</text>
+
+  <!-- 底部任务说明 -->
+  <text x="490" y="474" text-anchor="middle" font-size="11" fill="#64748b">FreeRTOS 任务：rx 20 ms（优先级 3） &gt; ctrl 20 ms（优先级 2） &gt; disp 50 ms（优先级 1），共享变量由互斥量保护</text>
+</svg>
